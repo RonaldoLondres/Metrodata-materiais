@@ -630,20 +630,6 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
   #lista-posse p.empty-note{grid-column:1 / -1;}
 
   /* ---------- BOTÃO DE FOTO (assinatura de quem pegou o material) ---------- */
-  .foto-btn{
-    font-family:'JetBrains Mono',monospace; font-size:15px; line-height:1;
-    background:#fff; border:1px solid var(--line); color:var(--ink);
-    padding:8px 11px; border-radius:2px; cursor:pointer; flex-shrink:0; white-space:nowrap;
-  }
-  .foto-btn:hover{ border-color:var(--accent-amber); }
-  .foto-btn-tabela{ font-size:13px; padding:4px 8px; }
-  #preview-foto-retirada{ max-width:130px; max-height:130px; border-radius:2px; border:1px solid var(--line); margin-top:8px; display:block; object-fit:cover; }
-  .modal-foto-box{
-    background:#FBF9F3; border:1px solid var(--line); border-radius:var(--radius);
-    padding:16px; max-width:min(92vw,480px); width:100%; box-shadow:var(--paper-shadow);
-  }
-  .modal-foto-box img{ width:100%; border-radius:2px; display:block; max-height:70vh; object-fit:contain; background:#111; }
-  .modal-foto-box p{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-soft); margin:10px 0 12px; }
   .posse-card{
     background:#FBF9F3; border:1px solid var(--line); border-radius:var(--radius);
     box-shadow:var(--paper-shadow); padding:14px 18px; display:flex; align-items:center;
@@ -797,9 +783,8 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
     .posse-card{flex-direction:column; align-items:stretch; text-align:left;}
     .posse-card .acoes{width:100%;}
     .posse-card .devolver-btn{flex:1 1 auto;}
-    .posse-card .foto-btn{flex:1 1 auto;}
 
-    .modal-box, .modal-foto-box{padding:20px 18px;}
+    .modal-box{padding:20px 18px;}
     .modal-actions button{flex:1 1 auto;}
 
     #lista-posse{max-height:56vh;}
@@ -811,6 +796,19 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
     .brand h1{font-size:14.5px;}
     .brand .mark{height:26px; padding:4px 7px;}
     .row3{grid-template-columns:1fr 1fr;}
+  }
+
+  .material-actions-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px;}
+  .danger-outline{border-color:var(--accent-rust)!important;color:var(--accent-rust)!important;}
+  @media(max-width:760px){
+    .material-actions-grid{grid-template-columns:1fr;}
+    .modal-actions{flex-wrap:wrap;}
+    .modal-actions button{min-height:44px;}
+    .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    table.ledger{min-width:680px;}
+    #tabela-estoque{min-width:620px;}
+    .ficha h2{line-height:1.25;}
+    input,select,button{max-width:100%;}
   }
 </style>
 </head>
@@ -849,10 +847,6 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
 
           <label for="inp-quantidade">Quantidade</label>
           <input type="number" id="inp-quantidade" min="1" value="1" required>
-
-          <label for="inp-foto-retirada">Foto da assinatura (confirmação de que o funcionário pegou)</label>
-          <input type="file" id="inp-foto-retirada" accept="image/*" capture="environment" required onchange="prevFotoRetirada(event)">
-          <img id="preview-foto-retirada" class="hidden" alt="Prévia da foto de confirmação">
 
           <div class="datahora" id="relogio-retirada"></div>
 
@@ -946,6 +940,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
         <button class="secondary" onclick="baixarPDF(document.getElementById('sel-alvo-planilha').value)">Baixar PDF</button>
         <button class="secondary" onclick="imprimirSecao(document.getElementById('sel-alvo-planilha').value)">Imprimir</button>
         <button class="secondary" onclick="exportarExcel()">Exportar Excel</button>
+        <button type="button" class="secondary danger-outline" onclick="limparRegistrosRetiradas()">Limpar registros</button>
         <button class="secondary" onclick="mostrarView('painel')">Voltar ao painel</button>
       </div>
     </div>
@@ -956,7 +951,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
         <table class="ledger" id="tabela-retiradas">
           <thead>
             <tr>
-              <th>Funcionário</th><th>Material</th><th>Qtd.</th><th>Retirada</th><th>Status</th><th>Devolução</th><th>Tempo com o material</th><th class="no-print">Foto</th>
+              <th>Funcionário</th><th>Material</th><th>Qtd.</th><th>Retirada</th><th>Status</th><th>Devolução</th><th>Tempo com o material</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -996,27 +991,17 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
     <p id="modal-material-titulo" style="font-family:'Oswald',sans-serif; font-weight:600; font-size:16px; margin:0 0 4px;"></p>
     <p id="modal-material-info" style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-soft); margin:0 0 18px;"></p>
 
-    <label for="modal-material-qtd" style="margin-top:0;">Quantidade a remover do estoque</label>
-    <input type="number" id="modal-material-qtd" min="1" value="1">
+    <label for="modal-material-qtd" style="margin-top:0;">Quantidade</label>
+    <input type="number" id="modal-material-qtd" min="1" value="1" inputmode="numeric">
     <p id="modal-material-aviso" class="empty-note" style="margin:6px 0 0;"></p>
 
-    <div class="modal-actions" style="justify-content:space-between; margin-top:20px;">
-      <button class="table-action-btn danger" onclick="excluirMaterialModal()">Excluir material</button>
-      <div style="display:flex; gap:10px;">
-        <button class="secondary" onclick="fecharModalMaterial()">Cancelar</button>
-        <button class="primary" style="margin-top:0; width:auto;" onclick="removerQtdMaterialModal()">Remover quantidade</button>
-      </div>
+    <div class="material-actions-grid">
+      <button type="button" class="primary" onclick="adicionarQtdMaterialModal()">+ Adicionar ao estoque</button>
+      <button type="button" class="secondary danger-outline" onclick="removerQtdMaterialModal()">− Remover do estoque</button>
     </div>
-  </div>
-</div>
-
-<!-- MODAL de visualização da foto de assinatura (quem pegou o material) -->
-<div id="modal-foto-overlay" class="modal-overlay hidden" onclick="if(event.target===this) fecharModalFoto()">
-  <div class="modal-foto-box">
-    <p id="modal-foto-legenda"></p>
-    <img id="modal-foto-img" src="" alt="Foto de confirmação">
-    <div class="modal-actions" style="margin-top:14px;">
-      <button class="secondary" onclick="fecharModalFoto()">Fechar</button>
+    <div class="modal-actions" style="justify-content:space-between; margin-top:14px;">
+      <button type="button" class="table-action-btn danger" onclick="excluirMaterialModal()">Excluir material</button>
+      <button type="button" class="secondary" onclick="fecharModalMaterial()">Cancelar</button>
     </div>
   </div>
 </div>
@@ -1330,7 +1315,6 @@ function renderPosse(){
         <div class="meta">retirado em ${r.dia}/${r.mes}/${r.ano} às ${r.hora}</div>
       </div>
       <div class="acoes">
-        ${r.foto ? `<button type="button" class="foto-btn" onclick="abrirFotoRetirada('${r.id}')" title="Ver foto de quem pegou">📷 Ver foto</button>` : ''}
         <button class="devolver-btn" onclick="registrarDevolucao('${r.id}')">Registrar devolução</button>
       </div>
     </div>
@@ -1376,6 +1360,33 @@ function formatarDuracao(ini, fim){
   return partes.join(' ');
 }
 
+async function limparRegistrosRetiradas(){
+  if(!Array.isArray(dados.retiradas) || dados.retiradas.length===0){
+    mostrarToast('Não há registros de retirada para limpar.', 'erro');
+    return;
+  }
+
+  // No fechamento do mês, limpa somente o que já foi devolvido.
+  // As retiradas ainda em aberto permanecem na planilha e continuam aparecendo em posse.
+  const devolvidos = dados.retiradas.filter(r=>r.devolvido);
+  const emAberto = dados.retiradas.filter(r=>!r.devolvido);
+
+  if(devolvidos.length===0){
+    mostrarToast('Não há registros devolvidos para limpar. As retiradas em aberto continuam na planilha.', 'erro');
+    return;
+  }
+
+  const ok = await confirmarAcao(
+    `Limpar ${devolvidos.length} registro(s) já devolvido(s)?\n\nAs ${emAberto.length} retirada(s) que ainda estão em aberto NÃO serão apagadas e continuarão aparecendo na planilha e em “Ferramentas em posse”.\n\nFuncionários, materiais e estoque também NÃO serão apagados. Faça um backup antes se quiser guardar o histórico deste mês.`
+  );
+  if(!ok) return;
+
+  dados.retiradas = dados.retiradas.filter(r=>!r.devolvido);
+  await salvarDados();
+  renderTudo();
+  mostrarToast(`Histórico limpo: ${devolvidos.length} devolvido(s) removido(s). ${emAberto.length} retirada(s) em aberto permanecem.`, 'sucesso');
+}
+
 function renderPlanilha(){
   const tbody = document.querySelector('#tabela-retiradas tbody');
   if(!tbody) return;
@@ -1393,9 +1404,6 @@ function renderPlanilha(){
       }else{
         statusHtml = `<span class="status-badge aberto">Em aberto</span>`;
       }
-      const fotoTd = r.foto
-        ? `<button type="button" class="foto-btn foto-btn-tabela" onclick="abrirFotoRetirada('${r.id}')" title="Ver foto de quem pegou">📷</button>`
-        : '—';
       return `<tr>
         <td>${r.funcionarioNome}</td>
         <td>${r.materialNome}</td>
@@ -1404,7 +1412,6 @@ function renderPlanilha(){
         <td>${statusHtml}</td>
         <td>${devolucaoTxt}</td>
         <td>${tempoTxt}</td>
-        <td class="no-print">${fotoTd}</td>
       </tr>`;
     }).join('');
   }
@@ -1428,7 +1435,7 @@ function abrirGerenciarMaterial(id){
   const overlay = document.getElementById('modal-material-overlay');
   overlay.dataset.materialId = id;
   document.getElementById('modal-material-titulo').textContent = m.nome;
-  document.getElementById('modal-material-info').textContent = `Total cadastrado: ${m.total}  ·  Disponível para remover: ${m.disponivel}`;
+  document.getElementById('modal-material-info').textContent = `Total cadastrado: ${m.total}  ·  Disponível agora: ${m.disponivel}`;
 
   const inp = document.getElementById('modal-material-qtd');
   const emPosse = m.total - m.disponivel;
@@ -1446,6 +1453,23 @@ function abrirGerenciarMaterial(id){
 
 function fecharModalMaterial(){
   document.getElementById('modal-material-overlay').classList.add('hidden');
+}
+
+async function adicionarQtdMaterialModal(){
+  const overlay = document.getElementById('modal-material-overlay');
+  const id = overlay.dataset.materialId;
+  const m = dados.materiais.find(x=>x.id===id);
+  if(!m) return;
+
+  const qtd = Number(document.getElementById('modal-material-qtd').value);
+  if(!Number.isInteger(qtd) || qtd<=0){ mostrarToast('Informe uma quantidade inteira válida.', 'erro'); return; }
+
+  m.total += qtd;
+  m.disponivel += qtd;
+  await salvarDados();
+  fecharModalMaterial();
+  renderTudo();
+  mostrarToast(`Estoque atualizado: +${qtd}x ${m.nome}.`, 'sucesso');
 }
 
 async function removerQtdMaterialModal(){
@@ -1550,64 +1574,11 @@ async function cadastrarFuncionario(){
 
 /* =============== AÇÕES: RETIRADA / DEVOLUÇÃO =============== */
 /* =============== FOTO DE CONFIRMAÇÃO (assinatura de quem pegou) =============== */
-// Reduz a foto (redimensiona + comprime) antes de guardar, para não pesar no banco de dados.
-function comprimirImagem(arquivo, maxDim=480, qualidade=0.55){
-  return new Promise((resolve, reject)=>{
-    const leitor = new FileReader();
-    leitor.onerror = ()=>reject(new Error('Não foi possível ler a imagem.'));
-    leitor.onload = ()=>{
-      const img = new Image();
-      img.onerror = ()=>reject(new Error('Não foi possível processar a imagem.'));
-      img.onload = ()=>{
-        let w = img.width, h = img.height;
-        if(w >= h && w > maxDim){ h = Math.round(h*(maxDim/w)); w = maxDim; }
-        else if(h > w && h > maxDim){ w = Math.round(w*(maxDim/h)); h = maxDim; }
-        const canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        resolve(canvas.toDataURL('image/jpeg', qualidade));
-      };
-      img.src = leitor.result;
-    };
-    leitor.readAsDataURL(arquivo);
-  });
-}
-
-async function prevFotoRetirada(ev){
-  const arquivo = ev.target.files[0];
-  const preview = document.getElementById('preview-foto-retirada');
-  if(!arquivo){ preview.classList.add('hidden'); preview.src = ''; return; }
-  try{
-    const dataUrl = await comprimirImagem(arquivo);
-    preview.src = dataUrl;
-    preview.classList.remove('hidden');
-  }catch(e){
-    console.error('Erro ao gerar prévia da foto:', e);
-    preview.classList.add('hidden');
-    mostrarToast('Não foi possível ler essa foto. Tente outra.', 'erro');
-  }
-}
-
-function abrirFotoRetirada(id){
-  const r = dados.retiradas.find(x=>x.id===id);
-  if(!r || !r.foto){ mostrarToast('Não há foto salva para este registro (já pode ter sido apagada após a devolução).', 'erro'); return; }
-  document.getElementById('modal-foto-legenda').textContent =
-    `${r.funcionarioNome} — ${r.materialNome} × ${r.quantidade} · retirado em ${r.dia}/${r.mes}/${r.ano} às ${r.hora}`;
-  document.getElementById('modal-foto-img').src = r.foto;
-  document.getElementById('modal-foto-overlay').classList.remove('hidden');
-}
-function fecharModalFoto(){
-  document.getElementById('modal-foto-overlay').classList.add('hidden');
-  document.getElementById('modal-foto-img').src = '';
-}
-
 async function registrarRetirada(ev){
   ev.preventDefault();
   const selF = document.getElementById('sel-funcionario');
   const selM = document.getElementById('sel-material');
   const qtdInp = document.getElementById('inp-quantidade');
-  const fotoInp = document.getElementById('inp-foto-retirada');
-
   const funcionario = dados.funcionarios.find(f=>f.id===selF.value);
   const material = dados.materiais.find(m=>m.id===selM.value);
   const quantidade = Number(qtdInp.value);
@@ -1616,22 +1587,6 @@ async function registrarRetirada(ev){
   if(!quantidade || quantidade<=0 || quantidade>material.disponivel){
     mostrarToast('Quantidade inválida ou maior do que o disponível em estoque.', 'erro'); return;
   }
-  if(!fotoInp.files[0]){
-    mostrarToast('Tire ou envie a foto da assinatura de confirmação antes de registrar.', 'erro'); return;
-  }
-
-  let fotoDataUrl;
-  try{
-    const preview = document.getElementById('preview-foto-retirada');
-    fotoDataUrl = (!preview.classList.contains('hidden') && preview.src)
-      ? preview.src
-      : await comprimirImagem(fotoInp.files[0]);
-  }catch(e){
-    console.error('Erro ao processar a foto:', e);
-    mostrarToast('Não foi possível processar a foto. Tente novamente.', 'erro');
-    return;
-  }
-
   const agora = new Date();
   const registro = {
     id: uid(),
@@ -1645,17 +1600,12 @@ async function registrarRetirada(ev){
     ano: agora.getFullYear(),
     hora: `${String(agora.getHours()).padStart(2,'0')}:${String(agora.getMinutes()).padStart(2,'0')}`,
     devolvido: false,
-    devDia:null, devMes:null, devAno:null, devHora:null,
-    foto: fotoDataUrl
+    devDia:null, devMes:null, devAno:null, devHora:null
   };
 
   material.disponivel -= quantidade;
   dados.retiradas.push(registro);
   qtdInp.value = 1;
-  fotoInp.value = '';
-  document.getElementById('preview-foto-retirada').classList.add('hidden');
-  document.getElementById('preview-foto-retirada').src = '';
-
   await salvarDados();
   renderTudo();
   mostrarToast(`Retirada registrada: ${funcionario.nome} pegou ${quantidade}x ${material.nome}.`, 'sucesso');
@@ -1679,10 +1629,6 @@ async function registrarDevolucao(id){
   if(material){
     material.disponivel = Math.min(material.total, material.disponivel + registro.quantidade);
   }
-
-  // A foto da assinatura só serve como comprovante enquanto o material está em posse.
-  // Depois da devolução ela é apagada para não ocupar espaço no banco de dados.
-  delete registro.foto;
 
   await salvarDados();
   renderTudo();
