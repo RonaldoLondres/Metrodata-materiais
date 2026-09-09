@@ -451,7 +451,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
     --bg-panel:#14293B;
     --bg-panel-2:#1D3C54;
     --ink:#1D2733;
-    --ink-soft:#57626C;
+    --ink-soft:#111111;
     --line:#C7D2D6;
     --accent-amber:#226BA8;
     --accent-amber-dark:#1A5686;
@@ -977,6 +977,94 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
     .brand h1{font-size:13px;}
     .nav-btn{font-size:8px;}
     .ficha h2{font-size:13px;}
+  }
+
+  /* ---------- CORTE FINAL: TEXTO MAIS FORTE E MOBILE REAL ---------- */
+  .section-label,
+  label,
+  .empty-note,
+  .posse-card .info,
+  .posse-card .info .meta,
+  table.ledger td,
+  table.ledger th,
+  .chip,
+  .chip small { color:#111 !important; }
+
+  @media (max-width: 900px){
+    /* Impede que os cartões de posse usem layout horizontal no celular. */
+    #lista-posse,
+    #lista-posse-frota{
+      display:flex !important;
+      flex-direction:column !important;
+      width:100% !important;
+      max-width:100% !important;
+      min-width:0 !important;
+      overflow:visible !important;
+      gap:10px !important;
+      padding:0 !important;
+    }
+
+    #lista-posse .posse-card,
+    #lista-posse-frota .posse-card{
+      display:flex !important;
+      flex-direction:column !important;
+      align-items:stretch !important;
+      justify-content:flex-start !important;
+      width:100% !important;
+      max-width:100% !important;
+      min-width:0 !important;
+      box-sizing:border-box !important;
+      gap:10px !important;
+      padding:12px !important;
+      overflow:hidden !important;
+    }
+
+    #lista-posse .posse-card .info,
+    #lista-posse-frota .posse-card .info{
+      display:block !important;
+      width:100% !important;
+      max-width:100% !important;
+      min-width:0 !important;
+      flex:none !important;
+      overflow-wrap:anywhere !important;
+      word-break:break-word !important;
+      white-space:normal !important;
+      line-height:1.35 !important;
+    }
+
+    #lista-posse .posse-card .acoes,
+    #lista-posse-frota .posse-card .acoes{
+      display:block !important;
+      width:100% !important;
+      max-width:100% !important;
+      min-width:0 !important;
+      flex:none !important;
+    }
+
+    #lista-posse .posse-card .devolver-btn,
+    #lista-posse-frota .posse-card .devolver-btn{
+      display:block !important;
+      width:100% !important;
+      max-width:100% !important;
+      min-width:0 !important;
+      height:auto !important;
+      min-height:46px !important;
+      padding:11px 12px !important;
+      margin:0 !important;
+      white-space:normal !important;
+      overflow:visible !important;
+      text-overflow:clip !important;
+      line-height:1.2 !important;
+    }
+  }
+
+  @media (max-width: 430px){
+    #lista-posse .posse-card,
+    #lista-posse-frota .posse-card{padding:11px !important;}
+    #lista-posse .posse-card .info,
+    #lista-posse-frota .posse-card .info{font-size:14px !important;}
+    #lista-posse .posse-card .devolver-btn,
+    #lista-posse-frota .posse-card .devolver-btn{font-size:12px !important;}
   }
 
 </style>
