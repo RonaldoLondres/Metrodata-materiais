@@ -1460,9 +1460,23 @@ async function salvarDados(){
   }
 }
 
+/* =============== PROTEÇÃO DE AÇÕES ADMINISTRATIVAS =============== */
+// Ações de apagar, devolver e gerenciar estoque exigem esta senha.
+// Registrar quem pegou ferramenta/veículo continua sem pedir senha.
+const SENHA_GERENCIAMENTO = 'ronaldomprn';
+
+function validarSenhaGerenciamento(){
+  const senha = window.prompt('Digite a senha para realizar esta ação:');
+  if(senha === SENHA_GERENCIAMENTO) return true;
+  if(senha !== null) mostrarToast('Senha incorreta. A ação foi cancelada.', 'erro');
+  return false;
+}
+
 /* =============== MODAL DE CONFIRMAÇÃO (substitui confirm()) =============== */
 let _resolveModal = null;
-function confirmarAcao(mensagem){
+async function confirmarAcao(mensagem){
+  // Toda confirmação de ação protegida passa pela senha primeiro.
+  if(!validarSenhaGerenciamento()) return false;
   document.getElementById('modal-message').textContent = mensagem;
   document.getElementById('modal-overlay').classList.remove('hidden');
   return new Promise(resolve=>{ _resolveModal = resolve; });
@@ -1890,6 +1904,7 @@ function renderPlanilha(){
 function abrirGerenciarMaterial(id){
   const m = dados.materiais.find(x=>x.id===id);
   if(!m) return;
+  if(!validarSenhaGerenciamento()) return;
   const overlay = document.getElementById('modal-material-overlay');
   overlay.dataset.materialId = id;
   document.getElementById('modal-material-titulo').textContent = m.nome;
