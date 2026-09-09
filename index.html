@@ -752,9 +752,15 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
     body[data-print-alvo="retiradas"] [data-print-section="retiradas"]{display:block !important;}
     body[data-print-alvo="estoque"] [data-print-section="estoque"]{display:block !important;}
     body[data-print-alvo="funcionarios"] [data-print-section="funcionarios"]{display:block !important;}
+    body[data-print-alvo="frota"] [data-print-section="frota"]{display:block !important;}
+    body[data-print-alvo="frota-registros"] [data-print-section="frota-registros"]{display:block !important;}
     body[data-print-alvo="tudo"] [data-print-section]{display:block !important;}
   }
 
+
+  .d1-switch{display:flex;gap:8px;margin:0 0 16px;}
+  .d1-tab{flex:1;border:1px solid var(--line);background:var(--paper);color:var(--ink-soft);padding:10px 12px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:11px;cursor:pointer;}
+  .d1-tab.active{background:var(--ink);color:#fff;border-color:var(--ink);}
   /* ---------- RESPONSIVO / CELULAR ---------- */
   html,body{overflow-x:hidden; width:100%;}
   img{max-width:100%;}
@@ -810,6 +816,169 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
     .ficha h2{line-height:1.25;}
     input,select,button{max-width:100%;}
   }
+
+
+  /* ---------- RESPONSIVIDADE TOTAL ---------- */
+  *, *::before, *::after{box-sizing:border-box;}
+  html{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+  body{width:100%;max-width:100%;min-width:0;overflow-x:hidden;margin:0;}
+  header,main,footer{width:100%;max-width:100%;min-width:0;}
+  header>*{min-width:0;}
+  .brand{min-width:0;}
+  .brand > div:last-child{min-width:0;}
+  .brand h1,.brand .eyebrow{overflow-wrap:anywhere;}
+  nav{min-width:0;}
+  button,input,select{box-sizing:border-box;max-width:100%;}
+  .ficha,.grid-2,.estoque-cols,.inline-form,.posse-card,.planilha-toolbar,.table-wrap,.download-box,.modal-box{min-width:0;}
+  .table-wrap{width:100%;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;}
+  table.ledger{max-width:none;}
+  .posse-card .info{min-width:0;flex:1 1 220px;overflow-wrap:anywhere;}
+  .posse-card .acoes{min-width:0;max-width:100%;}
+  .d1-switch{min-width:0;}
+  .d1-tab{min-width:0;overflow:hidden;text-overflow:ellipsis;}
+
+  @media(max-width:760px){
+    header{display:flex;flex-direction:column;align-items:stretch;padding:12px 12px 10px;gap:12px;}
+    .brand{width:100%;display:flex;align-items:center;gap:9px;}
+    .brand .mark{flex:0 0 auto;height:28px;max-width:48px;overflow:hidden;}
+    .brand h1{font-size:15px;line-height:1.15;margin:2px 0 0;white-space:normal;}
+    .brand .eyebrow{font-size:8.5px;line-height:1.15;margin:0;}
+    nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;width:100%;}
+    .nav-btn{width:100%;min-width:0;padding:10px 4px;font-size:10px;line-height:1.1;white-space:normal;}
+
+    main{padding:14px 10px 24px;}
+    .grid-2{grid-template-columns:minmax(0,1fr);gap:14px;}
+    .ficha{width:100%;padding:14px 12px 16px;overflow:hidden;}
+    .ficha h2{font-size:14px;gap:6px;flex-wrap:wrap;}
+    .ficha h2 .tag-id{font-size:10px;}
+
+    .d1-switch{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px;}
+    .d1-tab{width:100%;padding:10px 6px;font-size:10px;border-radius:6px;}
+
+    form{width:100%;min-width:0;}
+    label{font-size:12px;}
+    select,input{font-size:16px;min-height:42px;padding:9px 10px;}
+    button.primary{min-height:44px;font-size:13px;padding:11px 8px;}
+    button.secondary{min-height:42px;}
+
+    .row3{grid-template-columns:1fr 1fr;gap:7px;}
+    .datahora{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:9px 6px;}
+    .datahora div span{font-size:15px;}
+    .datahora div small{font-size:8px;letter-spacing:.7px;}
+
+    .estoque-cols{grid-template-columns:minmax(0,1fr);gap:12px;}
+    .inline-form{display:grid;grid-template-columns:minmax(0,1fr);gap:7px;}
+    .inline-form > div{width:100%;min-width:0;}
+    .inline-form button{width:100%;margin-top:2px;height:44px;}
+
+    .posse-card{display:flex;flex-direction:column;align-items:stretch;gap:10px;padding:12px;}
+    .posse-card .acoes{display:grid;grid-template-columns:minmax(0,1fr);width:100%;gap:7px;}
+    .posse-card .acoes select,.posse-card .devolver-btn{width:100%;min-width:0;}
+    .posse-card .devolver-btn{padding:10px 8px;}
+
+    .planilha-toolbar{display:flex;flex-direction:column;align-items:stretch;width:100%;gap:8px;}
+    .planilha-toolbar .actions{display:grid;grid-template-columns:minmax(0,1fr);width:100%;gap:7px;}
+    .planilha-toolbar select,.planilha-toolbar .actions button{width:100%;min-height:42px;}
+
+    .section-label{font-size:10px;line-height:1.2;margin:22px 0 9px;}
+    .chip{font-size:11.5px;padding:8px;}
+    .chip-list{max-height:220px;}
+
+    .table-wrap{max-height:55vh;border-radius:6px;}
+    table.ledger{min-width:650px;font-size:12px;}
+    table.ledger th{font-size:9.5px;padding:9px 8px;}
+    table.ledger td{padding:8px;}
+    #tabela-frota{min-width:500px;}
+    #tabela-retiradas-frota{min-width:760px;}
+    #tabela-estoque{min-width:620px;}
+
+    .modal-overlay{padding:10px;}
+    .modal-box{width:min(100%,420px);max-height:90vh;overflow-y:auto;padding:18px 14px;}
+    .modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+    .modal-actions button{width:100%;min-height:44px;}
+    .material-actions-grid{grid-template-columns:1fr;gap:8px;}
+
+    .download-box{width:calc(100% - 20px);max-width:420px;bottom:12px;padding:12px;}
+    .download-box-inner{gap:7px;}
+    .download-link{min-width:0;}
+    footer{font-size:9px;line-height:1.4;padding:0 10px;margin-top:24px;}
+  }
+
+  /* ---------- AJUSTE MOBILE: DEVOLUÇÃO DE VEÍCULOS ---------- */
+  @media(max-width:760px){
+    #lista-posse-frota{
+      width:100%;
+      max-width:100%;
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      overflow:visible;
+    }
+    #lista-posse-frota .posse-card{
+      width:100%;
+      max-width:100%;
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      align-items:stretch;
+      justify-content:flex-start;
+      gap:10px;
+      padding:12px;
+      overflow:hidden;
+    }
+    #lista-posse-frota .posse-card .info{
+      width:100%;
+      max-width:100%;
+      min-width:0;
+      flex:0 0 auto;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+      line-height:1.35;
+    }
+    #lista-posse-frota .posse-card .info b{
+      overflow-wrap:anywhere;
+      word-break:break-word;
+    }
+    #lista-posse-frota .posse-card .acoes{
+      width:100%;
+      max-width:100%;
+      min-width:0;
+      flex:0 0 auto;
+      display:block;
+    }
+    #lista-posse-frota .posse-card .devolver-btn{
+      display:block;
+      width:100%;
+      max-width:100%;
+      min-width:0;
+      min-height:44px;
+      padding:10px 12px;
+      white-space:normal;
+      line-height:1.2;
+      overflow-wrap:anywhere;
+    }
+  }
+
+  @media(max-width:430px){
+    main{padding-left:8px;padding-right:8px;}
+    .ficha{padding-left:10px;padding-right:10px;}
+    .brand h1{font-size:14px;}
+    .brand .eyebrow{font-size:8px;letter-spacing:1px;}
+    .nav-btn{font-size:9px;padding:9px 3px;}
+    .row3{grid-template-columns:1fr;}
+    .datahora{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .datahora div span{font-size:14px;}
+    .section-label{font-size:9.5px;}
+  }
+
+  @media(max-width:340px){
+    header{padding-left:8px;padding-right:8px;}
+    .brand h1{font-size:13px;}
+    .nav-btn{font-size:8px;}
+    .ficha h2{font-size:13px;}
+  }
+
 </style>
 </head>
 <body>
@@ -826,6 +995,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
     <button class="nav-btn active" id="btn-painel" onclick="mostrarView('painel')">Painel</button>
     <button class="nav-btn" id="btn-funcionarios" onclick="mostrarView('funcionarios')">Funcionários</button>
     <button class="nav-btn" id="btn-planilha" onclick="mostrarView('planilha')">Planilha</button>
+    <button class="nav-btn" id="btn-frota" onclick="mostrarView('frota')">Frota</button>
   </nav>
 </header>
 
@@ -838,6 +1008,11 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
       <!-- D1 -->
       <div class="ficha">
         <h2><span class="tag-id">D1</span> Registrar retirada</h2>
+        <div class="d1-switch no-print">
+          <button type="button" id="d1-btn-ferramentas" class="d1-tab active" onclick="alternarD1('ferramentas')">Ferramentas</button>
+          <button type="button" id="d1-btn-frota" class="d1-tab" onclick="alternarD1('frota')">Veículos</button>
+        </div>
+
         <form id="form-retirada" onsubmit="registrarRetirada(event)">
           <label for="sel-funcionario">Funcionário</label>
           <select id="sel-funcionario" required></select>
@@ -851,6 +1026,18 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
           <div class="datahora" id="relogio-retirada"></div>
 
           <button type="submit" class="primary">Pegou o material</button>
+        </form>
+
+        <form id="form-retirada-frota" class="hidden" onsubmit="registrarRetiradaFrota(event)">
+          <label for="sel-funcionario-frota">Quem pegou</label>
+          <select id="sel-funcionario-frota" required></select>
+
+          <label for="sel-carro-frota">Veículo</label>
+          <select id="sel-carro-frota" required></select>
+
+          <div class="datahora" id="relogio-retirada-frota"></div>
+
+          <button type="submit" class="primary">Registrar retirada do veículo</button>
         </form>
       </div>
 
@@ -902,6 +1089,9 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
 
     <div class="section-label">Ferramentas em posse — registrar devolução</div>
     <div id="lista-posse"></div>
+
+    <div class="section-label">Veículos em uso — registrar devolução</div>
+    <div id="lista-posse-frota"></div>
 
   </div>
 
@@ -970,6 +1160,60 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
     </div>
   </div>
 
+  <!-- =================== VIEW: FROTA =================== -->
+  <div id="view-frota" class="hidden">
+    <div class="planilha-toolbar">
+      <div class="section-label" style="margin:0; flex:1;">Frota de carros</div>
+      <div class="actions no-print">
+        <select id="sel-alvo-frota" title="O que baixar/imprimir">
+          <option value="frota">Somente carros</option>
+          <option value="frota-registros">Retiradas e devoluções</option>
+        </select>
+        <button class="secondary" onclick="baixarPDF(document.getElementById('sel-alvo-frota').value)">Baixar PDF</button>
+        <button class="secondary" onclick="imprimirSecao(document.getElementById('sel-alvo-frota').value)">Imprimir</button>
+        <button class="secondary" onclick="exportarExcelFrota()">Exportar Excel</button>
+        <button type="button" class="secondary danger-outline" onclick="limparRegistrosRetiradasFrota()">Limpar registros</button>
+        <button class="secondary" onclick="mostrarView('painel')">Voltar ao painel</button>
+      </div>
+    </div>
+
+    <div class="ficha" style="margin-bottom:22px;">
+      <h2><span class="tag-id">F1</span> Cadastrar carro</h2>
+      <div class="subform">
+        <div class="inline-form">
+          <div><input type="text" id="inp-novo-carro-modelo" placeholder="Modelo do carro"></div>
+          <div><select id="inp-novo-carro-nome">
+            <option value="2 lugares">2 lugares</option>
+            <option value="4 lugares">4 lugares</option>
+          </select></div>
+          <div style="max-width:160px"><input type="text" id="inp-novo-carro-placa" placeholder="Placa"></div>
+          <button class="secondary" onclick="cadastrarCarro()">Adicionar</button>
+        </div>
+      </div>
+    </div>
+
+    <div data-print-section="frota">
+      <div class="table-wrap">
+        <table class="ledger" id="tabela-frota">
+          <thead>
+            <tr><th>Modelo</th><th>Espaço</th><th>Placa</th><th class="no-print">Ações</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div data-print-section="frota-registros">
+      <div class="section-label">Histórico de retirada/devolução de veículos</div>
+      <div class="table-wrap">
+        <table class="ledger" id="tabela-retiradas-frota">
+          <thead><tr><th>Veículo</th><th>Placa</th><th>Quem pegou</th><th>Retirada</th><th>Status</th><th>Devolução</th><th>Tempo</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
 </main>
 
 <footer>Metrodata • Dados salvos automaticamente • Registros de retirada não podem ser editados após criados</footer>
@@ -1009,7 +1253,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
 <script>
 /* =============== ESTADO / PERSISTÊNCIA =============== */
 const STORAGE_KEY = "almoxarifado-dados-v1";
-let dados = { funcionarios: [], materiais: [], retiradas: [] };
+let dados = { funcionarios: [], materiais: [], retiradas: [], carros: [], retiradasFrota: [] };
 
 // Detecta se a API window.storage (do ambiente Claude) está disponível.
 function temWindowStorage(){
@@ -1084,7 +1328,9 @@ function normalizarDados(obj){
   return {
     funcionarios: Array.isArray(obj && obj.funcionarios) ? obj.funcionarios : [],
     materiais: Array.isArray(obj && obj.materiais) ? obj.materiais : [],
-    retiradas: Array.isArray(obj && obj.retiradas) ? obj.retiradas : []
+    retiradas: Array.isArray(obj && obj.retiradas) ? obj.retiradas : [],
+    carros: Array.isArray(obj && obj.carros) ? obj.carros : [],
+    retiradasFrota: Array.isArray(obj && obj.retiradasFrota) ? obj.retiradasFrota : []
   };
 }
 
@@ -1158,11 +1404,14 @@ function mostrarView(view){
   document.getElementById('view-painel').classList.toggle('hidden', view!=='painel');
   document.getElementById('view-funcionarios').classList.toggle('hidden', view!=='funcionarios');
   document.getElementById('view-planilha').classList.toggle('hidden', view!=='planilha');
+  document.getElementById('view-frota').classList.toggle('hidden', view!=='frota');
   document.getElementById('btn-painel').classList.toggle('active', view==='painel');
   document.getElementById('btn-funcionarios').classList.toggle('active', view==='funcionarios');
   document.getElementById('btn-planilha').classList.toggle('active', view==='planilha');
+  document.getElementById('btn-frota').classList.toggle('active', view==='frota');
   if(view==='planilha') renderPlanilha();
   if(view==='funcionarios') renderFuncionariosView();
+  if(view==='frota') renderFrotaView();
 }
 
 /* =============== BACKUP COMPLETO (levar dados entre computadores) =============== */
@@ -1224,6 +1473,7 @@ function mostrarLinkDownload(url, nomeArquivo, tipoLabel){
 function imprimirSecao(alvo){
   renderPlanilha();
   renderFuncionariosView();
+  renderFrotaView();
   document.body.dataset.printAlvo = alvo;
   try{
     window.print();
@@ -1237,13 +1487,16 @@ window.addEventListener('afterprint', ()=>{ delete document.body.dataset.printAl
 /* =============== RELÓGIO NO D1 =============== */
 function atualizarRelogio(){
   const agora = new Date();
-  const el = document.getElementById('relogio-retirada');
-  el.innerHTML = `
+  const html = `
     <div><span>${String(agora.getDate()).padStart(2,'0')}</span><small>DIA</small></div>
     <div><span>${String(agora.getMonth()+1).padStart(2,'0')}</span><small>MÊS</small></div>
     <div><span>${agora.getFullYear()}</span><small>ANO</small></div>
     <div><span>${String(agora.getHours()).padStart(2,'0')}:${String(agora.getMinutes()).padStart(2,'0')}</span><small>HORA</small></div>
   `;
+  const elFerramentas = document.getElementById('relogio-retirada');
+  const elFrota = document.getElementById('relogio-retirada-frota');
+  if(elFerramentas) elFerramentas.innerHTML = html;
+  if(elFrota) elFrota.innerHTML = html;
 }
 setInterval(atualizarRelogio, 1000);
 
@@ -1254,6 +1507,10 @@ function renderTudo(){
   renderPosse();
   renderFuncionariosView();
   renderPlanilha();
+  renderFrotaView();
+  renderFrotaSelects();
+  renderFrotaPosse();
+  renderFrotaHistorico();
 }
 
 function renderSelects(){
@@ -1346,6 +1603,92 @@ function renderFuncionariosView(){
     }).join('');
 }
 
+/* =============== VIEW: FROTA =============== */
+function renderFrotaView(){
+  const tbody = document.querySelector('#tabela-frota tbody');
+  if(!tbody) return;
+  if(!dados.carros.length){
+    tbody.innerHTML = `<tr><td colspan="4" class="empty-note">Nenhum carro cadastrado ainda. Use o cadastro (F1) para cadastrar.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = [...dados.carros]
+    .sort((a,b)=>a.modelo.localeCompare(b.modelo, 'pt-BR'))
+    .map(c=>`<tr>
+        <td>${c.modelo}</td>
+        <td>${c.nome || '—'}</td>
+        <td>${c.placa}</td>
+        <td class="acoes-cell no-print"><button type="button" class="table-action-btn danger" onclick="excluirCarro('${c.id}')">Excluir</button></td>
+      </tr>`).join('');
+}
+
+async function cadastrarCarro(){
+  const modeloInp = document.getElementById('inp-novo-carro-modelo');
+  const nomeInp = document.getElementById('inp-novo-carro-nome');
+  const placaInp = document.getElementById('inp-novo-carro-placa');
+  const modelo = modeloInp.value.trim();
+  const nome = nomeInp.value.trim();
+  const placa = placaInp.value.trim().toUpperCase();
+  if(!modelo || !placa){ mostrarToast('Informe ao menos o modelo e a placa do carro.', 'erro'); return; }
+  if(dados.carros.some(c=>c.placa.toUpperCase()===placa)){
+    mostrarToast('Já existe um carro cadastrado com essa placa.', 'erro'); return;
+  }
+  dados.carros.push({ id: uid(), modelo, nome, placa });
+  modeloInp.value=''; nomeInp.selectedIndex = 0; placaInp.value='';
+  await salvarDados();
+  renderTudo();
+  mostrarToast('Carro cadastrado com sucesso.', 'sucesso');
+}
+
+async function excluirCarro(id){
+  const c = dados.carros.find(x=>x.id===id);
+  if(!c) return;
+  const emUso = dados.retiradasFrota.some(r=>r.carroId===id && !r.devolvido);
+  const historico = dados.retiradasFrota.some(r=>r.carroId===id);
+  const aviso = emUso
+    ? `Atenção: este veículo está em uso. Registre a devolução antes de excluir.`
+    : historico
+      ? `Excluir "${c.modelo}" (placa ${c.placa}) do cadastro? O histórico de retirada/devolução será preservado. Deseja continuar?`
+      : `Excluir "${c.modelo}" (placa ${c.placa}) do cadastro de frota? Essa ação não pode ser desfeita.`;
+  if(emUso){ mostrarToast(aviso, 'erro'); return; }
+  const ok = await confirmarAcao(aviso);
+  if(!ok) return;
+  dados.carros = dados.carros.filter(x=>x.id!==id);
+  await salvarDados();
+  renderTudo();
+  mostrarToast('Carro excluído do cadastro.', 'sucesso');
+}
+
+/* =============== EXPORTAR EXCEL — FROTA =============== */
+function exportarExcelFrota(){
+  if(typeof XLSX === 'undefined'){
+    mostrarToast('A biblioteca de Excel não carregou. Verifique sua conexão com a internet e tente novamente.', 'erro');
+    return;
+  }
+  const frotaSheet = dados.carros.map(c=>({
+    "Modelo": c.modelo, "Espaço": c.nome || '', "Placa": c.placa
+  }));
+  const retiradasFrotaSheet = dados.retiradasFrota.map(r=>({
+    "Veículo": r.carroModelo, "Espaço": r.carroNome || '', "Placa": r.placa,
+    "Quem pegou": r.funcionarioNome, "Data retirada": `${r.dia}/${r.mes}/${r.ano}`, "Hora retirada": r.hora,
+    "Status": r.devolvido ? "Devolvido" : "Em aberto", "Quem devolveu": r.devolvido ? (r.devolvidoPorNome || r.funcionarioNome) : '',
+    "Data devolução": r.devolvido ? `${r.devDia}/${r.devMes}/${r.devAno}` : '', "Hora devolução": r.devolvido ? r.devHora : ''
+  }));
+  try{
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(frotaSheet), "Frota");
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(retiradasFrotaSheet), "Retiradas Frota");
+    const dataStr = new Date().toISOString().slice(0,10);
+    const nomeArquivo = `frota-${dataStr}.xlsx`;
+    const wbout = XLSX.write(wb, { bookType:'xlsx', type:'array' });
+    const blob = new Blob([wbout], { type:'application/octet-stream' });
+    const url = URL.createObjectURL(blob);
+    mostrarLinkDownload(url, nomeArquivo, 'Excel');
+  }catch(e){
+    console.error("Erro ao exportar Excel da frota:", e);
+    mostrarToast('Não foi possível gerar o arquivo Excel agora. Tente novamente.', 'erro');
+  }
+}
+
 function formatarDuracao(ini, fim){
   let ms = fim - ini;
   if(ms < 0) ms = 0;
@@ -1385,6 +1728,33 @@ async function limparRegistrosRetiradas(){
   await salvarDados();
   renderTudo();
   mostrarToast(`Histórico limpo: ${devolvidos.length} devolvido(s) removido(s). ${emAberto.length} retirada(s) em aberto permanecem.`, 'sucesso');
+}
+
+async function limparRegistrosRetiradasFrota(){
+  if(!Array.isArray(dados.retiradasFrota) || dados.retiradasFrota.length===0){
+    mostrarToast('Não há registros de retirada de frota para limpar.', 'erro');
+    return;
+  }
+
+  // Na frota, limpa somente os registros de veículos que já foram devolvidos.
+  // Os carros que ainda estão em uso permanecem registrados normalmente.
+  const devolvidos = dados.retiradasFrota.filter(r=>r.devolvido);
+  const emAberto = dados.retiradasFrota.filter(r=>!r.devolvido);
+
+  if(devolvidos.length===0){
+    mostrarToast('Não há registros de carros devolvidos para limpar. Os veículos em uso continuam registrados.', 'erro');
+    return;
+  }
+
+  const ok = await confirmarAcao(
+    `Limpar ${devolvidos.length} registro(s) de veículo(s) já devolvido(s)?\n\nOs ${emAberto.length} veículo(s) que ainda estão em aberto NÃO serão apagados e continuarão aparecendo na frota.\n\nCarros, funcionários e registros de ferramentas NÃO serão afetados. Faça um backup antes se quiser guardar o histórico deste mês.`
+  );
+  if(!ok) return;
+
+  dados.retiradasFrota = dados.retiradasFrota.filter(r=>!r.devolvido);
+  await salvarDados();
+  renderTudo();
+  mostrarToast(`Histórico da frota limpo: ${devolvidos.length} devolvido(s) removido(s). ${emAberto.length} veículo(s) em aberto permanecem.`, 'sucesso');
 }
 
 function renderPlanilha(){
@@ -1635,6 +2005,98 @@ async function registrarDevolucao(id){
   mostrarToast(`Devolução registrada: ${registro.materialNome} — ${registro.funcionarioNome}.`, 'sucesso');
 }
 
+/* =============== D1 — RETIRADA / DEVOLUÇÃO DE VEÍCULOS =============== */
+function alternarD1(tipo){
+  const ferramentas = tipo === 'ferramentas';
+  document.getElementById('form-retirada').classList.toggle('hidden', !ferramentas);
+  document.getElementById('form-retirada-frota').classList.toggle('hidden', ferramentas);
+  document.getElementById('d1-btn-ferramentas').classList.toggle('active', ferramentas);
+  document.getElementById('d1-btn-frota').classList.toggle('active', !ferramentas);
+  if(!ferramentas) renderFrotaSelects();
+}
+
+function renderFrotaSelects(){
+  const selF = document.getElementById('sel-funcionario-frota');
+  const selC = document.getElementById('sel-carro-frota');
+  if(!selF || !selC) return;
+  const fAtual = selF.value, cAtual = selC.value;
+  selF.innerHTML = dados.funcionarios.length
+    ? dados.funcionarios.map(f=>`<option value="${f.id}">${f.nome}</option>`).join('')
+    : `<option value="">— cadastre um funcionário —</option>`;
+
+  const emUso = new Set(dados.retiradasFrota.filter(r=>!r.devolvido).map(r=>r.carroId));
+  const disponiveis = dados.carros.filter(c=>!emUso.has(c.id));
+  selC.innerHTML = disponiveis.length
+    ? disponiveis.map(c=>`<option value="${c.id}">${c.modelo} — ${c.placa}${c.nome ? ` (${c.nome})` : ''}</option>`).join('')
+    : `<option value="">— todos os veículos estão em uso —</option>`;
+  if([...selF.options].some(o=>o.value===fAtual)) selF.value=fAtual;
+  if([...selC.options].some(o=>o.value===cAtual)) selC.value=cAtual;
+  const btn = document.querySelector('#form-retirada-frota .primary');
+  if(btn) btn.disabled = !dados.funcionarios.length || !disponiveis.length;
+}
+
+async function registrarRetiradaFrota(ev){
+  ev.preventDefault();
+  const funcionario = dados.funcionarios.find(f=>f.id===document.getElementById('sel-funcionario-frota').value);
+  const carro = dados.carros.find(c=>c.id===document.getElementById('sel-carro-frota').value);
+  if(!funcionario || !carro){ mostrarToast('Cadastre um funcionário e um veículo antes de registrar.', 'erro'); return; }
+  if(dados.retiradasFrota.some(r=>r.carroId===carro.id && !r.devolvido)){
+    mostrarToast('Esse veículo já está em uso.', 'erro'); return;
+  }
+  const agora = new Date();
+  dados.retiradasFrota.push({
+    id: uid(), carroId: carro.id, carroModelo: carro.modelo, carroNome: carro.nome || '', placa: carro.placa,
+    funcionarioId: funcionario.id, funcionarioNome: funcionario.nome,
+    devolvido: false, devolvidoPorId: null, devolvidoPorNome: null,
+    dia:String(agora.getDate()).padStart(2,'0'), mes:String(agora.getMonth()+1).padStart(2,'0'), ano:agora.getFullYear(),
+    hora:`${String(agora.getHours()).padStart(2,'0')}:${String(agora.getMinutes()).padStart(2,'0')}`,
+    devDia:null, devMes:null, devAno:null, devHora:null
+  });
+  await salvarDados();
+  renderTudo();
+  mostrarToast(`Retirada registrada: ${funcionario.nome} pegou ${carro.modelo} — ${carro.placa}.`, 'sucesso');
+}
+
+async function registrarDevolucaoFrota(id){
+  const registro = dados.retiradasFrota.find(r=>r.id===id);
+  if(!registro || registro.devolvido) return;
+  const f = dados.funcionarios.find(x=>x.id===registro.funcionarioId);
+  if(!f){ mostrarToast('O funcionário que pegou este veículo não está mais cadastrado.', 'erro'); return; }
+  const ok = await confirmarAcao(`Confirmar devolução de "${registro.carroModelo} — ${registro.placa}" por ${f.nome}?`);
+  if(!ok) return;
+  const agora = new Date();
+  registro.devolvido = true;
+  registro.devolvidoPorId = f.id;
+  registro.devolvidoPorNome = f.nome;
+  registro.devDia=String(agora.getDate()).padStart(2,'0');
+  registro.devMes=String(agora.getMonth()+1).padStart(2,'0');
+  registro.devAno=agora.getFullYear();
+  registro.devHora=`${String(agora.getHours()).padStart(2,'0')}:${String(agora.getMinutes()).padStart(2,'0')}`;
+  await salvarDados(); renderTudo();
+  mostrarToast(`Devolução registrada: ${f.nome} devolveu ${registro.carroModelo} — ${registro.placa}.`, 'sucesso');
+}
+
+function renderFrotaPosse(){
+  const el=document.getElementById('lista-posse-frota'); if(!el) return;
+  const ativos=dados.retiradasFrota.filter(r=>!r.devolvido);
+  if(!ativos.length){ el.innerHTML='<p class="empty-note">Nenhum veículo em uso no momento.</p>'; return; }
+  el.innerHTML=ativos.map(r=>`<div class="posse-card">
+    <div class="info"><b>${r.funcionarioNome}</b> — ${r.carroModelo} · ${r.placa}<div class="meta">retirado em ${r.dia}/${r.mes}/${r.ano} às ${r.hora}</div></div>
+    <div class="acoes"><button class="devolver-btn" onclick="registrarDevolucaoFrota('${r.id}')">Registrar devolução</button></div>
+  </div>`).join('');
+}
+
+function renderFrotaHistorico(){
+  const tbody=document.querySelector('#tabela-retiradas-frota tbody'); if(!tbody) return;
+  if(!dados.retiradasFrota.length){ tbody.innerHTML='<tr><td colspan="7" class="empty-note">Nenhum registro de veículo ainda.</td></tr>'; return; }
+  tbody.innerHTML=[...dados.retiradasFrota].reverse().map(r=>{
+    const ini=new Date(r.ano,r.mes-1,r.dia,...r.hora.split(':'));
+    let dev='—', tempo='—', status='<span class="status-badge aberto">Em aberto</span>';
+    if(r.devolvido){ const fim=new Date(r.devAno,r.devMes-1,r.devDia,...r.devHora.split(':')); dev=`${r.devDia}/${r.devMes}/${r.devAno} ${r.devHora}`; tempo=formatarDuracao(ini,fim); status='<span class="status-badge devolvido">Devolvido</span> <span class="stamp">OK</span>'; }
+    return `<tr><td>${r.carroModelo}${r.carroNome?` (${r.carroNome})`:''}</td><td>${r.placa}</td><td>${r.funcionarioNome}</td><td>${r.dia}/${r.mes}/${r.ano} ${r.hora}</td><td>${status}</td><td>${dev}</td><td>${tempo}</td></tr>`;
+  }).join('');
+}
+
 /* =============== EXPORTAR EXCEL =============== */
 function exportarExcel(){
   if(typeof XLSX === 'undefined'){
@@ -1743,9 +2205,37 @@ function baixarPDF(alvo){
       });
     }
 
+    function tabelaFrota(){
+      titulo('Frota de carros — Almoxarifado');
+      const linhas = dados.carros.map(c=>[c.modelo, c.nome || '—', c.placa]);
+      doc.autoTable({
+        head: [['Modelo','Espaço','Placa']],
+        body: linhas.length ? linhas : [['—','—','—']],
+        startY: 26, styles:{ fontSize:9 }, headStyles:{ fillColor:[30,42,44] }
+      });
+    }
+
+    function tabelaFrotaRegistros(){
+      titulo('Retiradas e devoluções de veículos — Almoxarifado');
+      const linhas = dados.retiradasFrota.map(r=>[
+        r.carroModelo, r.placa, r.funcionarioNome,
+        `${r.dia}/${r.mes}/${r.ano} ${r.hora}`,
+        r.devolvido ? 'Devolvido' : 'Em aberto',
+        r.devolvido ? `${r.devDia}/${r.devMes}/${r.devAno} ${r.devHora}` : '—',
+        r.devolvido ? formatarDuracao(new Date(r.ano,r.mes-1,r.dia,...r.hora.split(':')), new Date(r.devAno,r.devMes-1,r.devDia,...r.devHora.split(':'))) : '—'
+      ]);
+      doc.autoTable({
+        head: [['Veículo','Placa','Quem pegou','Retirada','Status','Devolução','Tempo']],
+        body: linhas.length ? linhas : [['—','—','—','—','—','—','—']],
+        startY: 26, styles:{ fontSize:8.5 }, headStyles:{ fillColor:[30,42,44] }
+      });
+    }
+
     if(alvo === 'retiradas'){ tabelaRetiradas(); }
     else if(alvo === 'estoque'){ tabelaEstoque(); }
     else if(alvo === 'funcionarios'){ tabelaFuncionarios(); }
+    else if(alvo === 'frota'){ tabelaFrota(); }
+    else if(alvo === 'frota-registros'){ tabelaFrotaRegistros(); }
     else { tabelaRetiradas(); doc.addPage(); tabelaEstoque(); }
 
     const nomeArquivo = `almoxarifado-${alvo}-${new Date().toISOString().slice(0,10)}.pdf`;
